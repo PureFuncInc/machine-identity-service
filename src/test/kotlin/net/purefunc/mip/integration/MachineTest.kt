@@ -65,7 +65,7 @@ class MachineTest(
 
     @Test
     @Order(2)
-    internal fun testMachine() =
+    internal fun `test normal`() =
         runBlocking {
             val idDateMap = (1..10).map {
                 webTestClient.post()
