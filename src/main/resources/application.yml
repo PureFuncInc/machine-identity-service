@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: machine-identity-service
+  profiles:
+    active: ide
+  webflux:
+    base-path: /${spring.application.name}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: ide
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/machine
+    username: postgres
+    password: rootroot
+#logging:
+#  level:
+#    io.r2dbc.postgresql.QUERY: DEBUG
+#    io.r2dbc.postgresql.PARAM: DEBUG
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: office-qat
+  r2dbc:
+    url: r2dbc:postgresql://postgresql:5432/machine
+    username: postgres
+    password: Pu7GmG8n6zX7UDLUw240nzIkK3nOX6je
