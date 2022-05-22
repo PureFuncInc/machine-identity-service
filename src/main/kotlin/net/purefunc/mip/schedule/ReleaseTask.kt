@@ -2,11 +2,13 @@ package net.purefunc.mip.schedule
 
 import kotlinx.coroutines.runBlocking
 import net.purefunc.mip.data.dao.MachineDao
+import net.purefunc.mip.data.table.MachineDo
 import org.slf4j.LoggerFactory
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import java.time.Instant
 
+@ConditionalOnProperty(name = ["schedule.enabled"], havingValue = "true")
 @Service
 class ReleaseTask(
     private val machineDao: MachineDao,
@@ -19,9 +21,6 @@ class ReleaseTask(
         runBlocking {
             log.debug("Release IN_USE")
 
-            machineDao.releaseInUse(
-                modifiedDate = Instant.now().toEpochMilli(),
-                invalidDate = Instant.now().toEpochMilli() - (60 * 1000),
-            )
+            MachineDo.handle(machineDao)
         }
 }

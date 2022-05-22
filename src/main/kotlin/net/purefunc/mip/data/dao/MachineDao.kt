@@ -1,6 +1,7 @@
 package net.purefunc.mip.data.dao
 
 import kotlinx.coroutines.flow.Flow
+import net.purefunc.mip.data.enu.MachineStatus
 import net.purefunc.mip.data.table.MachineDo
 import org.springframework.data.r2dbc.repository.Modifying
 import org.springframework.data.r2dbc.repository.Query
@@ -18,4 +19,6 @@ interface MachineDao : CoroutineCrudRepository<MachineDo, Long> {
     @Modifying
     @Query("UPDATE machine SET label = '', status = 'AVAILABLE', modified_date = :modifiedDate WHERE status = 'IN_USE' AND modified_date < :invalidDate")
     suspend fun releaseInUse(modifiedDate: Long, invalidDate: Long): Int
+
+    fun findAllByStatus(status: MachineStatus): Flow<MachineDo>
 }

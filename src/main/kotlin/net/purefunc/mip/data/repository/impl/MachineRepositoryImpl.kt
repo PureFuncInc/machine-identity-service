@@ -20,7 +20,15 @@ class MachineRepositoryImpl(
             machineDao.setInUse(
                 label = label,
                 modifiedDate = Instant.now().toEpochMilli(),
-                id = this
+                id = this,
             )
+        }
+
+    override suspend fun refresh(id: Long) =
+        run {
+            machineDao.findById(id)?.run {
+                this.modifiedDate = Instant.now().toEpochMilli()
+                machineDao.save(this)
+            } ?: throw IllegalStateException("Machine $id not found.")
         }
 }

@@ -12,7 +12,7 @@ import java.time.Instant
 
 @SpringBootTest
 @ActiveProfiles("generate-test")
-class MachineIdentityServiceApplicationTests {
+class GenerateData {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 

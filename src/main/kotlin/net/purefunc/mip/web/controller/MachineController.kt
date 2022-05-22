@@ -1,6 +1,5 @@
 package net.purefunc.mip.web.controller
 
-import net.purefunc.mip.data.dao.MachineDao
 import net.purefunc.mip.data.dto.req.MachineIdReq
 import net.purefunc.mip.data.dto.req.MachineLabelReq
 import net.purefunc.mip.data.repository.MachineRepository
@@ -17,7 +16,6 @@ import java.util.UUID
 @RequestMapping("/api/v1.0/machine")
 class MachineController(
     private val machineRepository: MachineRepository,
-    private val machineDao: MachineDao,
 ) {
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -35,7 +33,7 @@ class MachineController(
     suspend fun patchMachine(
         @RequestBody machineIdReq: MachineIdReq,
     ) = try {
-        ResponseEntity.ok(machineIdReq.refresh(machineDao))
+        ResponseEntity.ok(machineIdReq.refresh(machineRepository))
     } catch (ex: Exception) {
         handleException(ex)
     }

@@ -16,10 +16,6 @@ spring:
     url: r2dbc:postgresql://localhost:5432/machine
     username: postgres
     password: rootroot
-#logging:
-#  level:
-#    io.r2dbc.postgresql.QUERY: DEBUG
-#    io.r2dbc.postgresql.PARAM: DEBUG
 
 ---
 
@@ -31,3 +27,6 @@ spring:
     url: r2dbc:postgresql://postgresql:5432/machine
     username: postgres
     password: Pu7GmG8n6zX7UDLUw240nzIkK3nOX6je
+
+schedule:
+  enabled: true
