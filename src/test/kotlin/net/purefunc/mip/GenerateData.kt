@@ -23,7 +23,7 @@ class GenerateData {
     fun process() =
         runBlocking {
             repeat(1024) {
-                machineDao.save(MachineDo(null, "", MachineStatus.AVAILABLE, Instant.now().toEpochMilli()))
+                machineDao.save(MachineDo(null, "", "", MachineStatus.AVAILABLE, Instant.now().toEpochMilli()))
             }
 
             log.info("Add Test Data Finished.")

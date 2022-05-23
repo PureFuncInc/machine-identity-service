@@ -13,9 +13,9 @@ class MachineRepositoryImpl(
 ) : MachineRepository {
 
     @Transactional
-    override suspend fun create(label: String) =
+    override suspend fun create(groups: String, label: String) =
         run {
-            machineDao.findAvailable().toList()[0].id!!
+            machineDao.findAvailable(groups).toList()[0].id!!
         }.apply {
             machineDao.setInUse(
                 label = label,

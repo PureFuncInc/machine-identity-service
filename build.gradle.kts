@@ -28,18 +28,11 @@ plugins {
 }
 
 group = "net.purefunc"
-version = "1.1.0"
+version = mustHaveProp("GITHUB_REF_NAME")
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://maven.pkg.github.com/PureFuncInc/pure-platform-core")
-        credentials {
-            username = "Pure-Func-Inc"
-            password = mustHaveProp("GITHUB_PUBLISH_TOKEN")
-        }
-    }
 }
 
 dependencies {
@@ -83,7 +76,7 @@ jib {
     }
     container {
         creationTime = "USE_CURRENT_TIMESTAMP"
-        mainClass = "net.purefunc.voice.VoiceServiceApplicationKt"
+        mainClass = "net.purefunc.mip.MachineIdentityServiceApplicationKt"
         jvmFlags = listOf(
             "-Xms1g",
             "-Xmx1g"
