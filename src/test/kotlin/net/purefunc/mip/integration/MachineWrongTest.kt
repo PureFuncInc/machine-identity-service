@@ -53,7 +53,7 @@ class MachineWrongTest(
     internal fun init() =
         runBlocking {
             repeat(1024) {
-                machineDao.save(MachineDo(null, "Service", MachineStatus.IN_USE, Instant.now().toEpochMilli()))
+                machineDao.save(MachineDo(null, "Group", "Service", MachineStatus.IN_USE, Instant.now().toEpochMilli()))
             }
         }
 
@@ -62,7 +62,7 @@ class MachineWrongTest(
     internal fun `test no available machine`() {
         webTestClient.post()
             .uri("/api/v1.0/machine")
-            .bodyValue(MachineLabelReq("Test"))
+            .bodyValue(MachineLabelReq("G1", "Test"))
             .exchange()
             .expectStatus().is5xxServerError
     }

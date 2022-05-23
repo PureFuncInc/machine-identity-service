@@ -59,7 +59,7 @@ class MachineTest(
     internal fun init() =
         runBlocking {
             repeat(1024) {
-                machineDao.save(MachineDo(null, "", MachineStatus.AVAILABLE, Instant.now().toEpochMilli()))
+                machineDao.save(MachineDo(null, "G1", "", MachineStatus.AVAILABLE, Instant.now().toEpochMilli()))
             }
         }
 
@@ -70,7 +70,7 @@ class MachineTest(
             val idDateMap = (1..10).map {
                 webTestClient.post()
                     .uri("/api/v1.0/machine")
-                    .bodyValue(MachineLabelReq("Test"))
+                    .bodyValue(MachineLabelReq("G1", "Test"))
                     .exchange()
                     .expectStatus().isOk
                     .expectBody(Long::class.java).returnResult().responseBody!!
@@ -110,7 +110,8 @@ class MachineTest(
                 Assertions.assertThat(machine.modifiedDate < start).isTrue
             }
 
-            Assertions.assertThat(machineDao.findAllByStatus(MachineStatus.IN_USE).toList().size).isEqualTo(5)
+            Assertions.assertThat(machineDao.findAllByGroupsAndStatus("G1", MachineStatus.IN_USE).toList().size)
+                .isEqualTo(5)
 
             log.info("Finished.")
         }

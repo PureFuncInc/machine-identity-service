@@ -9,8 +9,8 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface MachineDao : CoroutineCrudRepository<MachineDo, Long> {
 
-    @Query("SELECT m.* FROM machine m WHERE m.status = 'AVAILABLE' FOR UPDATE")
-    fun findAvailable(): Flow<MachineDo>
+    @Query("SELECT m.* FROM machine m WHERE m.groups = :groups AND m.status = 'AVAILABLE' FOR UPDATE")
+    fun findAvailable(groups: String): Flow<MachineDo>
 
     @Modifying
     @Query("UPDATE machine SET label = :label, status = 'IN_USE', modified_date = :modifiedDate WHERE id = :id")
@@ -20,5 +20,5 @@ interface MachineDao : CoroutineCrudRepository<MachineDo, Long> {
     @Query("UPDATE machine SET label = '', status = 'AVAILABLE', modified_date = :modifiedDate WHERE status = 'IN_USE' AND modified_date < :invalidDate")
     suspend fun releaseInUse(modifiedDate: Long, invalidDate: Long): Int
 
-    fun findAllByStatus(status: MachineStatus): Flow<MachineDo>
+    fun findAllByGroupsAndStatus(groups: String, status: MachineStatus): Flow<MachineDo>
 }

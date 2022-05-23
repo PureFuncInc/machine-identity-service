@@ -12,6 +12,8 @@ data class MachineDo(
     @Id
     val id: Long?,
 
+    var groups: String,
+
     var label: String,
 
     var status: MachineStatus,
